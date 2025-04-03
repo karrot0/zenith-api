@@ -14,10 +14,7 @@ const PORT = process.env.PORT || 4444;
 const __filename = fileURLToPath(import.meta.url);
 const publicDir = path.join(dirname(__filename), "public");
 
-app.use((req, res, next) => {
-  console.log(`Request received: ${req.method} ${req.url}`);
-  next();
-});
+app.use(cors());
 
 app.use(express.static(publicDir, { redirect: false }));
 
@@ -40,5 +37,4 @@ app.get("*", (req, res) => {
 
 app.listen(PORT, () => {
   console.info(`Zenith API server listening on port ${PORT}`);
-  console.info(`Allowed origins: ${allowedOrigins.join(", ")}`);
 });
