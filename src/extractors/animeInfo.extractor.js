@@ -4,6 +4,7 @@ import formatTitle from "../helper/formatTitle.helper.js";
 import { v1_base_url } from "../utils/base_v1.js";
 import extractRecommendedData from "./recommend.extractor.js";
 import extractRelatedData from "./related.extractor.js";
+import { getAnimeById } from "./anilist.extractor.js";
 
 const baseUrl = v1_base_url;
 
@@ -77,6 +78,17 @@ async function extractAnimeInfo(id) {
       extractRecommendedData($),
       extractRelatedData($),
     ]);
+
+    // Get Anilist data
+    const anilistData = await getAnimeById(title);
+    const trailer = anilistData?.trailer ? {
+      id: anilistData.trailer.id,
+      site: anilistData.trailer.site,
+      thumbnail: anilistData.trailer.thumbnail,
+      url: anilistData.trailer.site === "youtube" ? 
+           `https://youtube.com/watch?v=${anilistData.trailer.id}` : null
+    } : null;
+
     let charactersVoiceActors = [];
     if (characterHtml) {
       charactersVoiceActors = $1(".bac-list-wrap .bac-item")
@@ -145,6 +157,8 @@ async function extractAnimeInfo(id) {
       charactersVoiceActors,
       recommended_data,
       related_data,
+      anilist_id: anilistData?.id || null,
+      trailer,
     };
   } catch (e) {
     console.error("Error extracting anime info:", e);
