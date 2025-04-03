@@ -19,7 +19,8 @@ export default async function extractRecommendedData($) {
           .find(".film-detail .film-name a")
           .attr("data-jname")
           .trim();
-        const poster = $(element).find(".film-poster img").attr("data-src");
+        const poster = ($(element).find(".film-poster-img").attr("data-src") || "")
+          .replace(/\/thumbnail\/\d+x\d+\//, '/thumbnail/1920x1080/');
         const $fdiItems = $(".film-detail .fd-infor .fdi-item", element);
         const showType = $fdiItems
           .filter((_, item) => {

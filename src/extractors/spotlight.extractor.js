@@ -13,11 +13,12 @@ async function extractSpotlights() {
 
     const promises = slideElements
       .map(async (ind, ele) => {
-        const poster = $(ele)
+        const poster = ($(ele)
           .find(
             "div.deslide-item > div.deslide-cover > div.deslide-cover-img > img.film-poster-img"
           )
-          .attr("data-src");
+          .attr("data-src") || "")
+          .replace(/\/thumbnail\/\d+x\d+\//, '/thumbnail/1920x1080/');
         const title = $(ele)
           .find(
             "div.deslide-item > div.deslide-item-content > div.desi-head-title"

@@ -49,7 +49,8 @@ async function extractAnimeInfo(id) {
 
     const title = titleElement.text().trim();
     const japanese_title = titleElement.attr("data-jname");
-    const poster = posterElement.find("img").attr("src");
+    let poster = posterElement.find("img").attr("src") || "";
+    poster = poster.replace(/\/thumbnail\/\d+x\d+\//, '/thumbnail/1920x1080/');
 
     const animeInfo = {};
     element.each((_, el) => {
@@ -99,9 +100,8 @@ async function extractAnimeInfo(id) {
                 .find(".per-info.ltr .pi-avatar")
                 .attr("href")
                 ?.split("/")[2] || "",
-            poster:
-              $1(el).find(".per-info.ltr .pi-avatar img").attr("data-src") ||
-              "",
+            poster: ($1(el).find(".per-info.ltr .pi-avatar img").attr("data-src") || "")
+              .replace(/\/thumbnail\/\d+x\d+\//, '/thumbnail/1920x1080/'),
             name: $1(el).find(".per-info.ltr .pi-detail a").text(),
             cast: $1(el).find(".per-info.ltr .pi-detail .pi-cast").text(),
           };
@@ -115,7 +115,8 @@ async function extractAnimeInfo(id) {
             voiceActors = rtlVoiceActors
               .map((_, actorEl) => ({
                 id: $1(actorEl).find("a").attr("href")?.split("/").pop() || "",
-                poster: $1(actorEl).find("img").attr("data-src") || "",
+                poster: ($1(actorEl).find("img").attr("data-src") || "")
+                  .replace(/\/thumbnail\/\d+x\d+\//, '/thumbnail/1920x1080/'),
                 name:
                   $1(actorEl).find(".pi-detail .pi-name a").text().trim() || "",
               }))
@@ -124,7 +125,8 @@ async function extractAnimeInfo(id) {
             voiceActors = xxVoiceActors
               .map((_, actorEl) => ({
                 id: $1(actorEl).attr("href")?.split("/").pop() || "",
-                poster: $1(actorEl).find("img").attr("data-src") || "",
+                poster: ($1(actorEl).find("img").attr("data-src") || "")
+                  .replace(/\/thumbnail\/\d+x\d+\//, '/thumbnail/1920x1080/'),
                 name: $1(actorEl).attr("title") || "",
               }))
               .get();
@@ -134,7 +136,8 @@ async function extractAnimeInfo(id) {
               .find(".per-info.per-info-xx .pix-list .pi-avatar")
               .map((_, actorEl) => ({
                 id: $1(actorEl).attr("href")?.split("/")[2] || "",
-                poster: $1(actorEl).find("img").attr("data-src") || "",
+                poster: ($1(actorEl).find("img").attr("data-src") || "")
+                  .replace(/\/thumbnail\/\d+x\d+\//, '/thumbnail/1920x1080/'),
                 name: $1(actorEl).attr("title") || "",
               }))
               .get();

@@ -5,7 +5,8 @@ import baseUrl from "../utils/baseUrl.js";
 async function fetchAnimeDetails(element) {
   const data_id = element.attr("data-id");
   const number = element.find(".number > span").text();
-  const poster = element.find("img").attr("data-src");
+  const poster = (element.find("img").attr("data-src") || "")
+    .replace(/\/thumbnail\/\d+x\d+\//, '/thumbnail/1920x1080/');
   const title = element.find(".film-title").text().trim();
   const japanese_title = element.find(".film-title").attr("data-jname").trim();
   const id = element.find("a").attr("href").split("/").pop();

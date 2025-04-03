@@ -54,11 +54,10 @@ async function extractSearchResults(search, page) {
             .find(".film-detail .film-name .dynamic-name")
             ?.attr("data-jname")
             ?.trim() || null,
-        poster:
-          $(el)
+        poster: ($(el)
             .find(".film-poster .film-poster-img")
             ?.attr("data-src")
-            ?.trim() || null,
+            ?.trim() || null)?.replace(/\/thumbnail\/\d+x\d+\//, '/thumbnail/1920x1080/'),
         duration: $(el)
           .find(".film-detail .fd-infor .fdi-item.fdi-duration")
           ?.text()

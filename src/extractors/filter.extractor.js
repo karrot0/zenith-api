@@ -111,10 +111,9 @@ async function extractFilterResults(params = {}) {
       result.push({
         id: href ? href.slice(1) : null,
         data_id: data_id ? `${data_id}` : null,
-        poster:
-          $el.find(".film-poster .film-poster-img").attr("data-src") ||
+        poster: ($el.find(".film-poster .film-poster-img").attr("data-src") ||
           $el.find(".film-poster .film-poster-img").attr("src") ||
-          null,
+          null)?.replace(/\/thumbnail\/\d+x\d+\//, '/thumbnail/1920x1080/'),
         title: $el.find(".film-name .dynamic-name").text().trim(),
         japanese_title:
           $el.find(".film-name .dynamic-name").attr("data-jname") || null,

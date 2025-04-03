@@ -14,10 +14,12 @@ async function extractSeasons(id) {
         const season = $(element).find(".title").text().trim();
         const title = $(element).attr("title").trim();
         const id = formatTitle(title, data_id);
-        const season_poster = $(element)
+        let season_poster = $(element)
           .find(".season-poster")
           .attr("style")
           .match(/url\((.*?)\)/)[1];
+        
+        season_poster = season_poster.replace(/\/thumbnail\/\d+x\d+\//, '/thumbnail/1920x1080/');
         return { id, data_number, data_id, season, title, season_poster };
       })
       .get();

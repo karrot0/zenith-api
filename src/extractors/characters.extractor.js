@@ -29,7 +29,8 @@ export async function extractCharacter(id) {
       
       const voiceActor = {
         name: voiceActorElement.find(".pi-name a").text().trim(),
-        profile: voiceActorElement.find(".pi-avatar img").attr("src"),
+        profile: voiceActorElement.find(".pi-avatar img").attr("src")
+          ?.replace(/\/thumbnail\/\d+x\d+\//, '/thumbnail/1920x1080/'),
         language: voiceActorElement.find(".pi-cast").text().trim(),
         id: voiceActorElement.find(".pi-name a").attr("href")?.split("/").pop()
       };
@@ -48,7 +49,8 @@ export async function extractCharacter(id) {
       const id = item.find(".film-name a").attr("href")?.split("/").pop();
       const role = item.find(".fdi-item").first().text().trim();
       const type = item.find(".fdi-item").last().text().trim();
-      const poster = item.find(".film-poster img").attr("src");
+      const poster = (item.find(".film-poster img").attr("data-src") || "")
+        .replace(/\/thumbnail\/\d+x\d+\//, '/thumbnail/1920x1080/');
       
       if (title && id) {
         animeography.push({
@@ -87,4 +89,4 @@ export async function extractCharacter(id) {
   }
 }
 
-export default extractCharacter; 
+export default extractCharacter;
