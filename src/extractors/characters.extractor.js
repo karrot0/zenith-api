@@ -1,6 +1,19 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import baseUrl from "../utils/baseUrl.js";
+import { getCharacterByName } from "./mal.extractor.js";
+
+// Function to fetch MAL data for a character
+async function fetchMalData(characterName, animeTitle) {
+  try {
+    console.log(`[Character Extractor] Fetching MAL data for: ${characterName} from ${animeTitle || 'any anime'}`);
+    const malData = await getCharacterByName(characterName, animeTitle);
+    return malData;
+  } catch (error) {
+    console.error("[Character Extractor] Error fetching MAL data:", error);
+    return null;
+  }
+}
 
 export async function extractCharacter(id) {
   try {
@@ -65,6 +78,14 @@ export async function extractCharacter(id) {
 
     console.log(`Found ${animeography.length} animeography items`);
 
+    // Get MAL data if we have a name and at least one anime title
+    let malData = null;
+    if (name && animeography.length > 0) {
+      // Use the first anime title as a reference for MAL search
+      const primaryAnime = animeography[0].title;
+      malData = await fetchMalData(name, primaryAnime);
+    }
+
     // Construct the final response
     const characterData = {
       success: true,
@@ -76,7 +97,8 @@ export async function extractCharacter(id) {
           japaneseName,
           about,
           voiceActors,
-          animeography
+          animeography,
+          mal: malData
         }]
       }
     };
@@ -86,6 +108,16 @@ export async function extractCharacter(id) {
   } catch (error) {
     console.error("Error extracting character data:", error);
     throw new Error("Failed to extract character information");
+  }
+}
+
+// Add a standalone function to get MAL character data directly
+export async function getMalCharacterData(name, anime) {
+  try {
+    return await getCharacterByName(name, anime);
+  } catch (error) {
+    console.error("Error getting MAL character data:", error);
+    throw new Error("Failed to retrieve MAL character data");
   }
 }
 

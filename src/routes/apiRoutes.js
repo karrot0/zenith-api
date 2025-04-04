@@ -22,6 +22,7 @@ import getCharacter from "../controllers/characters.controller.js";
 import * as filterController from "../controllers/filter.controller.js";
 import getTopSearch from "../controllers/topsearch.controller.js";
 import { getAnilistInfo } from "../controllers/anilist.controller.js";
+import { searchCharacter } from "../controllers/mal.controller.js";
 
 export const createApiRoutes = (app, jsonResponse, jsonError) => {
   const createRoute = (path, controllerMethod) => {
@@ -88,4 +89,5 @@ export const createApiRoutes = (app, jsonResponse, jsonError) => {
   createRoute("/api/character/:id", getCharacter);
   createRoute("/api/top-search", getTopSearch);
   createRoute("/api/anilist/:id", getAnilistInfo);
+  createRoute("/api/mal/character", searchCharacter);
 };
