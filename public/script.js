@@ -357,15 +357,15 @@ document.addEventListener('DOMContentLoaded', function() {
                           </tr>
                           <tr class="variable-row">
                             <td class="variable-name">malScore</td>
-                            <td class="variable-value">${info.malScore || 'N/A'}</td>
+                            <td class="variable-value">${info.animeInfo["MAL Score"] || 'N/A'}</td>
                           </tr>
                           <tr class="variable-row">
                             <td class="variable-name">genres</td>
-                            <td class="variable-value">${JSON.stringify(info.genres)}</td>
+                            <td class="variable-value">${JSON.stringify(info.animeInfo.Genres)}</td>
                           </tr>
                           <tr class="variable-row">
                             <td class="variable-name">tvInfo</td>
-                            <td class="variable-value">${JSON.stringify(info.tvInfo)}</td>
+                            <td class="variable-value">${JSON.stringify(info.animeInfo.tvInfo)}</td>
                           </tr>
                         </table>
                       </div>

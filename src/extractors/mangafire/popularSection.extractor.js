@@ -13,7 +13,7 @@ import * as cheerio from "cheerio";
 export async function extractPopularSections(page = 1) {
     try {
         const url = new URL(`${baseUrl}/filter?keyword=&language[]=en&sort=most_viewed&page=${page}`);
-        const response = await axios.get(url.toString());
+        const response = await axios.get(url.toString(), { headers });
         const $ = cheerio.load(response.data);
 
         const items = [];

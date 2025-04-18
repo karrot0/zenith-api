@@ -20,7 +20,7 @@ const ContentRating = {
 
 export async function extractMangaInfo(mangaId) {
     try {
-        const response = await axios.get(`${baseUrl}/manga/${mangaId}`);
+        const response = await axios.get(`${baseUrl}/manga/${mangaId}`, { headers });
         const $ = cheerio.load(response.data);
 
         const title = $(".manga-detail .info h1").text().trim();
@@ -168,7 +168,7 @@ export async function getSimilarMangaInfo(similar_manga) {
     // For every item in similar_manga, request the manga info and return only name, id, image and genres
     const similarMangaInfoPromises = similar_manga.map(async (manga) => {
         try {
-            const response = await axios.get(`${baseUrl}/manga/${manga.id}`);
+            const response = await axios.get(`${baseUrl}/manga/${manga.id}`, { headers });
             const $ = cheerio.load(response.data);
             const title = $(".manga-detail .info h1").text().trim();
             const image = $(".manga-detail .poster img").attr("src") || "";
