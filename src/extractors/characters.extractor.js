@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import baseUrl from "../utils/baseUrl.js";
-import { getCharacterByName } from "./mal.extractor.js";
+import { getCharacterByName } from "./mal/mal.extractor.js";
 
 // Function to fetch MAL data for a character
 async function fetchMalData(characterName, animeTitle) {

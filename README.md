@@ -1,5 +1,14 @@
 <div align="center">
 
+<p align="center">
+  <img
+    src="./public/black-clover-noelle-sleeping.gif"
+    alt="Black Clover Noelle Sleeping Animation"
+  />
+    </p>
+
+# <p align="center">Zenith API (Anime API)</p>
+
 ![Static Badge](https://img.shields.io/badge/node.js-grey?logo=nodedotjs) ![GitHub stars](https://img.shields.io/github/stars/itzzzme/anime-api?logo=github)
 ![GitHub forks](https://img.shields.io/github/forks/itzzzme/anime-api?logo=github)
 ![Static Badge](https://img.shields.io/badge/version-1.0.0-blue)
@@ -10,17 +19,9 @@
 
 1.  This `api` does not store any files , it only link to the media which is hosted on 3rd party services.
 
-2.  This `api` is explicitly made for educational purposes only and not for commercial usage. This repo will not be responsible for any misuse of it.
+2.  This `api` is explicitly made for educational purposes only and not for commercial usage. This repository and its maintainers will not be held responsible for any misuse, illegal activities, or violations of terms of service that may result from using this API.
 
-<p align="center">
-      <img
-        src="./public/anya.gif"
-        width="200"
-        height="200"
-      />
-    </p>
-
-# <p align="center">Anime API</p>
+3.  By using this API, you agree that you are solely responsible for complying with all applicable laws, regulations, and third-party terms of service related to anime streaming platforms.
 
 >
 

@@ -14,7 +14,6 @@ import * as randomIdController from "../controllers/randomId.controller.js";
 import * as producerController from "../controllers/producer.controller.js";
 import * as characterListController from "../controllers/voiceactor.controller.js";
 import * as nextEpisodeScheduleController from "../controllers/nextEpisodeSchedule.controller.js";
-// import * as mangaController from "../controllers/manga.controller.js";
 import { routeTypes } from "./category.route.js";
 import { getWatchlist } from "../controllers/watchlist.controller.js";
 import getVoiceActors from "../controllers/actors.controller.js";
@@ -22,7 +21,8 @@ import getCharacter from "../controllers/characters.controller.js";
 import * as filterController from "../controllers/filter.controller.js";
 import getTopSearch from "../controllers/topsearch.controller.js";
 import { getAnilistInfo } from "../controllers/anilist.controller.js";
-import { searchCharacter } from "../controllers/mal.controller.js";
+import { searchCharacter, getMangaInfo } from "../controllers/mal.controller.js";
+import * as mangafireController from "../controllers/mangafire.controller.js";
 
 export const createApiRoutes = (app, jsonResponse, jsonError) => {
   const createRoute = (path, controllerMethod) => {
@@ -90,4 +90,8 @@ export const createApiRoutes = (app, jsonResponse, jsonError) => {
   createRoute("/api/top-search", getTopSearch);
   createRoute("/api/anilist/:id", getAnilistInfo);
   createRoute("/api/mal/character", searchCharacter);
+  createRoute("/api/mal/manga/:id", getMangaInfo);
+  // Mangafire routes
+  createRoute("/api/mangafire/popular", mangafireController.getPopularManga);
+  createRoute("/api/mangafire/info/:id", mangafireController.getMangaInfo);
 };

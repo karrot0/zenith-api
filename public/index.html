@@ -4,129 +4,605 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <title>Anime Api</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body,
-      html {
-        height: 100%;
-        width: 100%;
-        max-height: 100vh;
-        max-width: 100vw;
-        background-color: #1e1e1e;
-        color: #ce9178;
-      }
-
-      .container {
-        height: 100%;
-        width: 100%;
-        display: grid;
-        grid-template-rows: auto 1fr;
-        grid-template-columns: 1fr;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-      }
-
-      .image-container {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        background-size: cover;
-        position: relative;
-        z-index: 1;
-      }
-
-      h1 {
-        font-size: 2rem;
-        text-align: center;
-        font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
-          sans-serif;
-        z-index: 2;
-      }
-
-      #gif,
-      #mirrored-gif {
-        height: 300px;
-        width: 300px;
-      }
-
-      #mirrored-gif {
-        transform: scaleX(-1);
-      }
-
-      #pic {
-        width: 250px;
-        height: 250px;
-        border-radius: 50%;
-        object-position: center;
-        object-fit: cover;
-      }
-
-      .profile {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 2;
-      }
-      .github {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        align-items: center;
-      }
-      .fa-github {
-        color: grey;
-      }
-      a {
-        font-size: 1.3rem;
-        color: #7cdcfe;
-      }
-      @media (max-width: 700px) {
-        .image-container {
-          display: none;
-        }
-      }
-    </style>
+    <title>Zenith API Documentation</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com data:; img-src 'self' data: https: http:;">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
   </head>
-  <body>
-    <div class="container">
-      <h1>Welcome to API 🎉</h1>
-      <div class="profile">
-        <img id="pic" src="image.webp" alt="" />
-        <div class="github">
-          <i class="fa fa-github" style="font-size: 36px"></i>
-          <a href="https://github.com/itzzzme/anime-api" target="_blank"
-            >Click here to refer docs</a
-          >
+  <body class="bg-gray-900 text-white p-8">
+    <div class="flex">
+      <!-- Left Navigation -->
+      <div class="fixed left-0 top-0 w-64 h-screen p-6 bg-gray-800" id="sidebar">
+        <div class="logo-container flex items-center mb-6 p-2 border-b border-gray-700 pb-4">
+          <div class="logo bg-indigo-600 rounded-lg p-3 mr-3">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+          </div>
+        <div class="logo-text text-lg font-bold text-white">Zenith API</div>
+      </div>
+
+        <nav class="mt-4">
+          <!-- Getting Started Section -->
+          <div class="flex items-center justify-between mb-3">
+          <div class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Getting Started</div>
+          <span class="bg-indigo-500 text-xs px-2 py-1 rounded-full">New</span>
+          </div>
+          <ul class="mb-6">
+            <li class="mb-2 transform hover:translate-x-1 transition-transform duration-200">
+              <a href="#endpoints" class="flex items-center p-2 rounded-md hover:bg-gray-700 group">
+                <div class="bg-indigo-900/30 p-2 rounded mr-2">
+              <i class="fa fa-rocket text-indigo-400"></i>
+                </div>
+                <span>API Endpoints</span>
+                <i class="fa fa-chevron-right ml-auto opacity-0 group-hover:opacity-100 text-gray-500 text-xs"></i>
+              </a>
+            </li>
+          </ul>
+
+          <!-- Endpoints Section -->
+          <div class="flex items-center justify-between mb-3">
+            <div class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Endpoints</div>
+            <div class="text-xs bg-gray-700 px-2 py-1 rounded-full">{7}</div>
+          </div>
+
+          <ul class="space-y-1">
+            <li class="transform hover:translate-x-1 transition-transform duration-200">
+              <a href="#home-data" class="flex items-center p-2 rounded-md hover:bg-gray-700 group">
+                <div class="bg-yellow-900/30 p-2 rounded mr-2">
+              <i class="fa fa-star text-yellow-400"></i>
+                </div>
+                <span>Home Data</span>
+                <span class="ml-auto bg-yellow-500/20 text-yellow-200 text-xs px-1.5 py-0.5 rounded">GET</span>
+              </a>
+            </li>
+            <li class="transform hover:translate-x-1 transition-transform duration-200">
+              <a href="#top-ten" class="flex items-center p-2 rounded-md hover:bg-gray-700 group">
+                <div class="bg-yellow-900/30 p-2 rounded mr-2">
+              <i class="fa fa-star text-yellow-400"></i>
+                </div>
+                <span>Top Ten Anime</span>
+                <span class="ml-auto bg-yellow-500/20 text-yellow-200 text-xs px-1.5 py-0.5 rounded">GET</span>
+              </a>
+            </li>
+            <li class="transform hover:translate-x-1 transition-transform duration-200">
+              <a href="#info" class="flex items-center p-2 rounded-md hover:bg-gray-700 group">
+                <div class="bg-blue-900/30 p-2 rounded mr-2">
+              <i class="fa fa-info-circle text-blue-400"></i>
+                </div>
+                <span>Anime Info</span>
+                <span class="ml-auto bg-blue-500/20 text-blue-200 text-xs px-1.5 py-0.5 rounded">GET</span>
+              </a>
+            </li>
+            <li class="transform hover:translate-x-1 transition-transform duration-200">
+              <a href="#episodes" class="flex items-center p-2 rounded-md hover:bg-gray-700 group">
+                <div class="bg-green-900/30 p-2 rounded mr-2">
+              <i class="fa fa-list text-green-400"></i>
+                </div>
+                <span>Episode List</span>
+                <span class="ml-auto bg-green-500/20 text-green-200 text-xs px-1.5 py-0.5 rounded">GET</span>
+              </a>
+            </li>
+            <li class="transform hover:translate-x-1 transition-transform duration-200">
+              <a href="#stream" class="flex items-center p-2 rounded-md hover:bg-gray-700 group">
+                <div class="bg-red-900/30 p-2 rounded mr-2">
+              <i class="fa fa-play text-red-400"></i>
+                </div>
+                <span>Stream Info</span>
+                <span class="ml-auto bg-red-500/20 text-red-200 text-xs px-1.5 py-0.5 rounded">GET</span>
+              </a>
+            </li>
+              <li class="transform hover:translate-x-1 transition-transform duration-200">
+                <a href="#search" class="flex items-center p-2 rounded-md hover:bg-gray-700 group">
+                  <div class="bg-purple-900/30 p-2 rounded mr-2">
+                <i class="fa fa-search text-purple-400"></i>
+                  </div>
+                  <span>Search Anime</span>
+                  <span class="ml-auto bg-purple-500/20 text-purple-200 text-xs px-1.5 py-0.5 rounded">GET</span>
+                </a>
+              </li>
+              <li class="transform hover:translate-x-1 transition-transform duration-200">
+                <a href="#filter" class="flex items-center p-2 rounded-md hover:bg-gray-700 group">
+                  <div class="bg-teal-900/30 p-2 rounded mr-2">
+                <i class="fa fa-filter text-teal-400"></i>
+                  </div>
+                  <span>Filter Anime</span>
+                  <span class="ml-auto bg-teal-500/20 text-teal-200 text-xs px-1.5 py-0.5 rounded">GET</span>
+                </a>
+              </li>
+              <li class="transform hover:translate-x-1 transition-transform duration-200">
+                <a href="#manga" class="flex items-center p-2 rounded-md hover:bg-gray-700 group">
+                  <div class="bg-orange-900/30 p-2 rounded mr-2">
+                <i class="fa fa-book text-orange-400"></i>
+                  </div>
+                  <span>Popular Manga</span>
+                  <span class="ml-auto bg-orange-500/20 text-orange-200 text-xs px-1.5 py-0.5 rounded">GET</span>
+                </a>
+              </li>
+            </ul>
+        </nav>
+        
+        <!-- Version Information -->
+        <div class="fixed left-0 bottom-0 w-64 p-6 bg-gray-800 border-t border-gray-700">
+          <div class="flex items-center p-2 rounded-md bg-gradient-to-r from-indigo-900/50 to-purple-900/50">
+            <div class="p-2 bg-indigo-600 rounded mr-3">
+              <i class="fa fa-code text-white"></i>
+            </div>
+            <div>
+              <div class="text-xs text-gray-400">Version</div>
+              <div class="text-sm font-medium">v1.0.0-beta</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="image-container">
-        <img
-          id="gif"
-          src="https://media.tenor.com/1G8D0kk1bMQAAAAi/anime-hello.gif"
-          alt=""
-        />
-        <img
-          id="mirrored-gif"
-          src="https://media.tenor.com/1G8D0kk1bMQAAAAi/anime-hello.gif"
-          alt=""
-        />
+
+      <!-- Main Content -->
+      <div class="ml-64 flex-1 container max-w-5xl px-8 py-12 bg-gray-800/50 backdrop-blur-sm rounded-2xl shadow-lg p-6 mb-8 border border-gray-700">
+        <div class="text-center mb-12">
+          <h1 class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600 mb-4">Zenith API Documentation</h1>
+          <p class="text-gray-400 text-xl max-w-2xl mx-auto">A powerful anime streaming API for seamless integration with your applications.</p>
+          <div class="flex justify-center items-center gap-3 mt-6">
+            <a href="#endpoints" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full transition-all flex items-center gap-2">
+              <i class="fa fa-book"></i> Get Started
+            </a>
+            <a href="https://github.com/karrot0/zenith-api" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-full transition-all flex items-center gap-2">
+              <i class="fa fa-github"></i> GitHub
+            </a>
+          </div>
+        </div>
+
+        <div class="space-y-8 mt-12" id="endpoints"></div>
+          <div class="bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl shadow-lg overflow-hidden">
+            <div class="border-b border-gray-700 p-6" id="home-data">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-white">API Endpoints</h2>
+                <div class="flex items-center gap-2">
+                  <span class="bg-indigo-600 text-white text-xs px-3 py-1 rounded-full">Core</span>
+                  <span class="bg-indigo-600 text-white text-xs px-3 py-1 rounded-full">Home Data</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-between bg-gray-900 p-3 rounded-lg mb-4">
+                <div class="flex items-center">
+                  <span class="bg-yellow-500/20 text-yellow-200 text-xs font-bold px-2 py-1 rounded mr-3">GET</span>
+                  <code class="text-gray-300">/api</code>
+                </div>
+                <span class="endpoint-toggle text-gray-400 hover:text-white">
+                  <i class="fa fa-chevron-down"></i>
+                </span>
+              </div>
+              <p class="text-gray-400 mb-3">Base endpoint for the Zenith API. Returns Home Data</p>
+              <div class="bg-gray-900/50 p-4 rounded-lg">
+                <p class="text-sm text-gray-400 mb-2"><i class="fa fa-info-circle text-blue-400 mr-2"></i>Returns API status and version information</p>
+              </div>
+              
+              <!-- Swagger-like test interface for home data -->
+              <div class="endpoint-tester mt-4 bg-gray-900/70 rounded-lg p-4">
+                <div class="flex justify-between items-center mb-4">
+                  <h3 class="text-lg font-semibold text-white">Try it out</h3>
+                  <button class="execute-btn bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1 rounded-md text-sm" data-endpoint="/api">Execute</button>
+                </div>
+                <div class="response-container mt-3 hidden">
+                  <div class="flex items-center justify-between mb-2">
+                    <h4 class="text-sm font-semibold text-green-400">Response</h4>
+                    <span class="text-xs bg-gray-800 px-2 py-1 rounded status-code"></span>
+                  </div>
+                  <div class="response-time text-xs text-gray-500 mb-2"></div>
+                  <pre class="response-area bg-gray-950 p-3 rounded-md text-xs text-gray-300 overflow-x-auto"></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="border-b border-gray-700 p-6" id="top-ten">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-white">Top Ten Anime</h2>
+                <span class="bg-yellow-600 text-white text-xs px-2 py-1 rounded-full">Popular</span>
+              </div>
+              <div class="flex items-center justify-between bg-gray-900 p-3 rounded-lg mb-4">
+                <div class="flex items-center">
+                  <span class="bg-yellow-500/20 text-yellow-200 text-xs font-bold px-2 py-1 rounded mr-3">GET</span>
+                  <code class="text-gray-300">/api/top-ten</code>
+                </div>
+                <span class="endpoint-toggle text-gray-400 hover:text-white">
+                  <i class="fa fa-chevron-down"></i>
+                </span>
+              </div>
+              <p class="text-gray-400 mb-3">Retrieve the top ten most popular anime.</p>
+              <div class="bg-gray-900/50 p-4 rounded-lg">
+                <p class="text-sm text-gray-400 mb-2"><i class="fa fa-clock-o text-yellow-400 mr-2"></i>No parameters required</p>
+              </div>
+
+              <!-- Example Component -->
+              <div class="example-section">
+                <h3 class="example-section-title">
+                  <i class="fa fa-lightbulb-o"></i> Example Response
+                </h3>
+                
+                <div class="example-carousel">
+                  <div class="carousel-slides">
+                    <!-- Example 1: Today's Top Anime -->
+                    <div class="carousel-slide">
+                      <div class="example-card">
+                        <div class="example-card-image" style="background-image: url('https://gogocdn.net/cover/kimetsu-no-yaiba.png');">
+                        </div>
+                        <div class="example-card-content">
+                          <div class="example-card-title">Today's Top Anime</div>
+                          <div class="example-card-subtitle">Response for today's rankings</div>
+                          <div class="example-card-data">
+                            <table class="variable-table">
+                              <tr class="variable-row">
+                                <td class="variable-name">today</td>
+                                <td class="variable-value">Array[10] - Today's top anime</td>
+                              </tr>
+                              <tr class="variable-row">
+                                <td class="variable-name">example</td>
+                                <td class="variable-value">{
+                                  "id": "demon-slayer",
+                                  "title": "Demon Slayer",
+                                  "poster": "https://...",
+                                  "number": "1",
+                                  "tvInfo": { "sub": "24", "dub": "24" }
+                                }</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Example 2: Weekly Top Anime -->
+                    <div class="carousel-slide hidden">
+                      <div class="example-card">
+                        <div class="example-card-image" style="background-image: url('https://gogocdn.net/cover/jujutsu-kaisen.png');">
+                        </div>
+                        <div class="example-card-content">
+                          <div class="example-card-title">Weekly Top Anime</div>
+                          <div class="example-card-subtitle">Response for weekly rankings</div>
+                          <div class="example-card-data">
+                            <table class="variable-table">
+                              <tr class="variable-row">
+                                <td class="variable-name">week</td>
+                                <td class="variable-value">Array[10] - This week's top anime</td>
+                              </tr>
+                              <tr class="variable-row">
+                                <td class="variable-name">example</td>
+                                <td class="variable-value">{
+                                  "id": "jujutsu-kaisen",
+                                  "title": "Jujutsu Kaisen",
+                                  "poster": "https://...",
+                                  "number": "1",
+                                  "tvInfo": { "sub": "24", "dub": "24" }
+                                }</td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Carousel Controls -->
+                  <div class="carousel-controls">
+                    <div class="carousel-arrow carousel-prev">
+                      <i class="fa fa-chevron-left"></i>
+                    </div>
+                    <div class="carousel-arrow carousel-next">
+                      <i class="fa fa-chevron-right"></i>
+                    </div>
+                    <div class="carousel-indicators"></div>
+                  </div>
+                </div>
+              </div>
+              
+
+              <!-- Swagger-like test interface -->
+              <div class="endpoint-tester mt-4 bg-gray-900/70 rounded-lg p-4">
+                <div class="flex justify-between items-center mb-4">
+                  <h3 class="text-lg font-semibold text-white">Try it out</h3>
+                  <button class="execute-btn bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1 rounded-md text-sm" data-endpoint="/api/top-ten">Execute</button>
+                </div>
+                <div class="response-container mt-3 hidden">
+                  <div class="flex items-center justify-between mb-2">
+                    <h4 class="text-sm font-semibold text-green-400">Response</h4>
+                    <span class="text-xs bg-gray-800 px-2 py-1 rounded status-code"></span>
+                  </div>
+                  <div class="response-time text-xs text-gray-500 mb-2"></div>
+                  <pre class="response-area bg-gray-950 p-3 rounded-md text-xs text-gray-300 overflow-x-auto"></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="border-b border-gray-700 p-6" id="info">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-white">Anime Info</h2>
+                <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">Details</span>
+              </div>
+              <div class="flex items-center justify-between bg-gray-900 p-3 rounded-lg mb-4">
+                <div class="flex items-center">
+                  <span class="bg-blue-500/20 text-blue-200 text-xs font-bold px-2 py-1 rounded mr-3">GET</span>
+                  <code class="text-gray-300">/api/info?id={your-id}</code>
+                </div>
+                <span class="endpoint-toggle text-gray-400 hover:text-white">
+                  <i class="fa fa-chevron-down"></i>
+                </span>
+              </div>
+              <p class="text-gray-400 mb-3">Get detailed information about a specific anime.</p>
+              <div class="bg-gray-900/50 p-4 rounded-lg">
+                <p class="text-sm text-gray-400 mb-2"><i class="fa fa-link text-blue-400 mr-2"></i>Required parameter: <code class="text-xs bg-gray-800 px-2 py-1 rounded">id</code></p>
+              </div>
+
+              <!-- Swagger-like test interface for anime info -->
+              <div class="endpoint-tester mt-4 bg-gray-900/70 rounded-lg p-4">
+                <div class="mb-4">
+                  <label class="block text-sm text-gray-400 mb-2">Anime ID:</label>
+                  <input type="text" 
+                         class="param-input bg-gray-800 text-gray-200 px-3 py-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                         data-param="id" 
+                         data-default="one-piece-100" 
+                         placeholder="Enter anime ID (e.g., one-piece-100)">
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <h3 class="text-lg font-semibold text-white">Try it out</h3>
+                  <button class="execute-btn bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1 rounded-md text-sm" data-endpoint="/api/info">Execute</button>
+                </div>
+                <div class="response-container mt-3 hidden">
+                  <div class="flex items-center justify-between mb-2">
+                    <h4 class="text-sm font-semibold text-green-400">Response</h4>
+                    <span class="text-xs bg-gray-800 px-2 py-1 rounded status-code"></span>
+                  </div>
+                  <div class="response-time text-xs text-gray-500 mb-2"></div>
+                  <pre class="response-area bg-gray-950 p-3 rounded-md text-xs text-gray-300 overflow-x-auto"></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="border-b border-gray-700 p-6" id="episodes">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-white">Episode List</h2>
+                <span class="bg-green-600 text-white text-xs px-2 py-1 rounded-full">Content</span>
+              </div>
+              <div class="flex items-center justify-between bg-gray-900 p-3 rounded-lg mb-4">
+                <div class="flex items-center">
+                  <span class="bg-green-500/20 text-green-200 text-xs font-bold px-2 py-1 rounded mr-3">GET</span>
+                  <code class="text-gray-300">/api/episodes/:id</code>
+                </div>
+                <span class="endpoint-toggle text-gray-400 hover:text-white">
+                  <i class="fa fa-chevron-down"></i>
+                </span>
+              </div>
+              <p class="text-gray-400 mb-3">Fetch all episodes for a specific anime series.</p>
+              <div class="bg-gray-900/50 p-4 rounded-lg">
+                <p class="text-sm text-gray-400 mb-2"><i class="fa fa-code text-green-400 mr-2"></i>Path parameter: <code class="text-xs bg-gray-800 px-2 py-1 rounded">id</code> (anime identifier)</p>
+              </div>
+
+              <!-- Swagger-like test interface for episodes -->
+              <div class="endpoint-tester mt-4 bg-gray-900/70 rounded-lg p-4">
+                <div class="mb-4">
+                  <label class="block text-sm text-gray-400 mb-2">Anime ID:</label>
+                  <input type="text" 
+                         class="param-input bg-gray-800 text-gray-200 px-3 py-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                         data-param="id" 
+                         data-default="one-piece-100" 
+                         placeholder="Enter anime ID (e.g., one-piece-100)">
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <h3 class="text-lg font-semibold text-white">Try it out</h3>
+                  <button class="execute-btn bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1 rounded-md text-sm" data-endpoint="/api/episodes/:id">Execute</button>
+                </div>
+                <div class="response-container mt-3 hidden">
+                  <div class="flex items-center justify-between mb-2">
+                    <h4 class="text-sm font-semibold text-green-400">Response</h4>
+                    <span class="text-xs bg-gray-800 px-2 py-1 rounded status-code"></span>
+                  </div>
+                  <div class="response-time text-xs text-gray-500 mb-2"></div>
+                  <pre class="response-area bg-gray-950 p-3 rounded-md text-xs text-gray-300 overflow-x-auto"></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="border-b border-gray-700 p-6" id="stream">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-white">Stream Info</h2>
+                <span class="bg-red-600 text-white text-xs px-2 py-1 rounded-full">Media</span>
+              </div>
+              <div class="flex items-center justify-between bg-gray-900 p-3 rounded-lg mb-4">
+                <div class="flex items-center">
+                  <span class="bg-red-500/20 text-red-200 text-xs font-bold px-2 py-1 rounded mr-3">GET</span>
+                  <code class="text-gray-300">/api/stream</code>
+                </div>
+                <span class="endpoint-toggle text-gray-400 hover:text-white">
+                  <i class="fa fa-chevron-down"></i>
+                </span>
+              </div>
+              <p class="text-gray-400 mb-3">Get streaming information for an episode.</p>
+              <div class="bg-gray-900/50 p-4 rounded-lg">
+                <p class="text-sm text-gray-400 mb-2"><i class="fa fa-play-circle text-red-400 mr-2"></i>Required parameters: <code class="text-xs bg-gray-800 px-2 py-1 rounded">episodeId</code></p>
+              </div>
+
+              <!-- Swagger-like test interface for stream -->
+              <div class="endpoint-tester mt-4 bg-gray-900/70 rounded-lg p-4">
+                <div class="mb-4">
+                  <label class="block text-sm text-gray-400 mb-2">Episode ID:</label>
+                  <input type="text" 
+                         class="param-input bg-gray-800 text-gray-200 px-3 py-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                         data-param="episodeId" 
+                         data-default="one-piece-100-episode-1" 
+                         placeholder="Enter episode ID">
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <h3 class="text-lg font-semibold text-white">Try it out</h3>
+                  <button class="execute-btn bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1 rounded-md text-sm" data-endpoint="/api/stream">Execute</button>
+                </div>
+                <div class="response-container mt-3 hidden">
+                  <div class="flex items-center justify-between mb-2">
+                    <h4 class="text-sm font-semibold text-green-400">Response</h4>
+                    <span class="text-xs bg-gray-800 px-2 py-1 rounded status-code"></span>
+                  </div>
+                  <div class="response-time text-xs text-gray-500 mb-2"></div>
+                  <pre class="response-area bg-gray-950 p-3 rounded-md text-xs text-gray-300 overflow-x-auto"></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="border-b border-gray-700 p-6" id="filter">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-white">Search Anime</h2>
+                <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded-full">Discovery</span>
+              </div>
+              <div class="flex items-center justify-between bg-gray-900 p-3 rounded-lg mb-4">
+                <div class="flex items-center">
+                  <span class="bg-purple-500/20 text-purple-200 text-xs font-bold px-2 py-1 rounded mr-3">GET</span>
+                  <code class="text-gray-300">/api/search</code>
+                </div>
+                <span class="endpoint-toggle text-gray-400 hover:text-white">
+                  <i class="fa fa-chevron-down"></i>
+                </span>
+              </div>
+              <p class="text-gray-400 mb-3">Search for anime by title or keywords.</p>
+              <div class="bg-gray-900/50 p-4 rounded-lg">
+                <p class="text-sm text-gray-400 mb-2"><i class="fa fa-search text-purple-400 mr-2"></i>Required parameter: <code class="text-xs bg-gray-800 px-2 py-1 rounded">q</code> (search query)</p>
+              </div>
+
+              <!-- Swagger-like test interface for search -->
+              <div class="endpoint-tester mt-4 bg-gray-900/70 rounded-lg p-4">
+                <div class="mb-4">
+                  <label class="block text-sm text-gray-400 mb-2">Search Query:</label>
+                  <input type="text" 
+                         class="param-input bg-gray-800 text-gray-200 px-3 py-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-indigo-500" 
+                         data-param="q" 
+                         data-default="one piece" 
+                         placeholder="Enter search query">
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <h3 class="text-lg font-semibold text-white">Try it out</h3>
+                  <button class="execute-btn bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1 rounded-md text-sm" data-endpoint="/api/search">Execute</button>
+                </div>
+                <div class="response-container mt-3 hidden">
+                  <div class="flex items-center justify-between mb-2">
+                    <h4 class="text-sm font-semibold text-green-400">Response</h4>
+                    <span class="text-xs bg-gray-800 px-2 py-1 rounded status-code"></span>
+                  </div>
+                  <div class="response-time text-xs text-gray-500 mb-2"></div>
+                  <pre class="response-area bg-gray-950 p-3 rounded-md text-xs text-gray-300 overflow-x-auto"></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="border-b border-gray-700 p-6" id="manga">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-white">Popular Manga</h2>
+                <span class="bg-orange-600 text-white text-xs px-2 py-1 rounded-full">Manga</span>
+              </div>
+              <div class="flex items-center justify-between bg-gray-900 p-3 rounded-lg mb-4">
+                <div class="flex items-center">
+                  <span class="bg-orange-500/20 text-orange-200 text-xs font-bold px-2 py-1 rounded mr-3">GET</span>
+                  <code class="text-gray-300">/api/mangafire/popular</code>
+                </div>
+                <span class="endpoint-toggle text-gray-400 hover:text-white">
+                  <i class="fa fa-chevron-down"></i>
+                </span>
+              </div>
+              <p class="text-gray-400 mb-3">Get a list of popular manga titles.</p>
+              <div class="bg-gray-900/50 p-4 rounded-lg">
+                <p class="text-sm text-gray-400 mb-2"><i class="fa fa-book text-orange-400 mr-2"></i>Optional parameter: <code class="text-xs bg-gray-800 px-2 py-1 rounded">page</code> (defaults to 1)</p>
+              </div>
+
+              <!-- Swagger-like test interface for manga -->
+              <div class="endpoint-tester mt-4 bg-gray-900/70 rounded-lg p-4">
+                <div class="flex justify-between items-center mb-4">
+                  <h3 class="text-lg font-semibold text-white">Try it out</h3>
+                  <button class="execute-btn bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-1 rounded-md text-sm" data-endpoint="/api/mangafire/popular">Execute</button>
+                </div>
+                <div class="response-container mt-3 hidden">
+                  <div class="flex items-center justify-between mb-2">
+                    <h4 class="text-sm font-semibold text-green-400">Response</h4>
+                    <span class="text-xs bg-gray-800 px-2 py-1 rounded status-code"></span>
+                  </div>
+                  <div class="response-time text-xs text-gray-500 mb-2"></div>
+                  <pre class="response-area bg-gray-950 p-3 rounded-md text-xs text-gray-300 overflow-x-auto"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <script src="script.js"></script>
+    
+    <!-- Example Components Script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Initialize all example carousels
+        initializeExampleCarousels();
+      });
+      
+      function initializeExampleCarousels() {
+        const carousels = document.querySelectorAll('.example-carousel');
+        
+        carousels.forEach(carousel => {
+          const slides = carousel.querySelectorAll('.carousel-slide');
+          const totalSlides = slides.length;
+          const nextBtn = carousel.querySelector('.carousel-next');
+          const prevBtn = carousel.querySelector('.carousel-prev');
+          const indicators = carousel.querySelector('.carousel-indicators');
+          
+          // Create indicators
+          for (let i = 0; i < totalSlides; i++) {
+            const indicator = document.createElement('span');
+            indicator.classList.add('carousel-indicator');
+            if (i === 0) indicator.classList.add('active');
+            indicator.addEventListener('click', () => goToSlide(i));
+            indicators.appendChild(indicator);
+          }
+          
+          // Set initial state
+          let currentSlide = 0;
+          updateCarousel();
+          
+          // Add event listeners
+          if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+              currentSlide = (currentSlide + 1) % totalSlides;
+              updateCarousel();
+            });
+          }
+          
+          if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+              currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+              updateCarousel();
+            });
+          }
+          
+          // Function to update carousel display
+          function updateCarousel() {
+            slides.forEach((slide, index) => {
+              if (index === currentSlide) {
+                slide.classList.remove('hidden');
+              } else {
+                slide.classList.add('hidden');
+              }
+            });
+            
+            // Update indicators
+            const allIndicators = carousel.querySelectorAll('.carousel-indicator');
+            allIndicators.forEach((indicator, index) => {
+              if (index === currentSlide) {
+                indicator.classList.add('active');
+              } else {
+                indicator.classList.remove('active');
+              }
+            });
+          }
+          
+          // Function to go to a specific slide
+          function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+          }
+        });
+      }
+    </script>
   </body>
 </html>
