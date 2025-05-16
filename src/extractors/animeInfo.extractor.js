@@ -89,6 +89,7 @@ async function extractAnimeInfo(id) {
       url: anilistData.trailer.site === "youtube" ? 
            `https://youtube.com/watch?v=${anilistData.trailer.id}` : null
     } : null;
+    const episodes = anilistData?.streamingEpisodes || 0;
 
     let charactersVoiceActors = [];
     if (characterHtml) {
@@ -162,6 +163,7 @@ async function extractAnimeInfo(id) {
       related_data,
       anilist_id: anilistData?.id || null,
       trailer,
+      episodes,
     };
   } catch (e) {
     console.error("Error extracting anime info:", e);

@@ -15,6 +15,13 @@ export const getAnimeById = async (animeId) => {
                         english
                         native
                     }
+                    bannerImage
+                	coverImage {
+                		extraLarge
+                		large
+                		medium
+                		color
+                	}
                     description
                     episodes
                     status
@@ -45,6 +52,14 @@ export const getAnimeById = async (animeId) => {
                         site
                         type
                     }
+                  	streamingEpisodes {
+                  	  title
+                  	  thumbnail
+                  	}
+                	nextAiringEpisode {
+                		id
+                        timeUntilAiring
+                	}
                 }
             }
         `;
