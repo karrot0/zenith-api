@@ -90,6 +90,7 @@ async function extractAnimeInfo(id) {
            `https://youtube.com/watch?v=${anilistData.trailer.id}` : null
     } : null;
     const episodes = anilistData?.streamingEpisodes || 0;
+    const banner = anilistData?.bannerImage || "";
 
     let charactersVoiceActors = [];
     if (characterHtml) {
@@ -155,6 +156,7 @@ async function extractAnimeInfo(id) {
       id: season_id,
       title,
       japanese_title,
+      banner,
       poster,
       showType,
       animeInfo,

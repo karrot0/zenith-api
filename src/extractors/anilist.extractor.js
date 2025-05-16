@@ -41,7 +41,6 @@ export const getAnimeById = async (animeId) => {
                     coverImage {
                         large
                     }
-                    bannerImage
                     trailer {
                         id
                         site
