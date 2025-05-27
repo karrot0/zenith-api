@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
 import baseUrl from "../utils/baseUrl.js";
+import { getAnimeDetails } from "./tmdb/main.js";
 
 async function extractSpotlights() {
   try {
@@ -63,24 +64,34 @@ async function extractSpotlights() {
 
         const tvInfo = {};
 
-        await Promise.all(
-          $(ele)
+        await Promise.all([
+          ...$(ele)
             .find("div.sc-detail > div.scd-item")
-            .map(async (index, element) => {
+            .map((index, element) => {
               const key = tvInfoMapping[index];
               let value = $(element).text().trim().replace(/\n/g, "");
 
               const tickContainer = $(element).find(".tick");
 
               if (tickContainer.length > 0) {
-                value = {
-                  sub: tickContainer.find(".tick-sub").text().trim(),
-                  dub: tickContainer.find(".tick-dub").text().trim(),
-                };
+          value = {
+            sub: tickContainer.find(".tick-sub").text().trim(),
+            dub: tickContainer.find(".tick-dub").text().trim(),
+          };
               }
               tvInfo[key] = value;
             })
-        );
+            .get(),
+          (async () => {
+            const tmdbData = await getAnimeDetails(title);
+            if (tmdbData.id) {
+              tvInfo.tmdbId = tmdbData.id;
+              tvInfo.logos = tmdbData.logos || [];
+              tvInfo.backdrops = tmdbData.backdrops || [];
+            }
+          })(),
+        ]);
+
         return {
           id,
           data_id,
