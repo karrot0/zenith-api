@@ -34,15 +34,17 @@ export async function getAnimeDetails(title) {
             return commonWords.length / Math.max(words1.length, words2.length);
         }
 
-        const [logos, backdrops] = await Promise.all([
+        const [logos, backdrops, openings] = await Promise.all([
             getAnimeLogos(bestMatch),
-            getAnimeBackdrops(bestMatch)
+            getAnimeBackdrops(bestMatch),
+            getAnimeOpenings(bestMatch)
         ]);
 
         const details = {
             id: bestMatch,
             logos: logos,
-            backdrops: backdrops
+            backdrops: backdrops,
+            openings: openings
         }
 
         return details;
@@ -93,6 +95,42 @@ export async function getAnimeBackdrops(id) {
         return backdrops;
     } catch (error) {
         console.error(`Error fetching backdrops for id ${id}:`, error.message);
+        return [];
+    }
+}
+
+export async function getAnimeOpenings(id) {
+    try {
+        const response = await axios.get(`https://www.themoviedb.org/tv/${id}/videos?active_nav_item=Opening%20Credits&language=en-US`);
+        const $ = cheerio.load(response.data);
+
+        const openings = [];
+        $('.video.card.default').each((_, el) => {
+            const $el = $(el);
+            const a = $el.find('.wrapper a.play_trailer');
+            const youtubeId = a.attr('data-id');
+            const youtubeUrl = youtubeId ? `https://www.youtube.com/watch?v=${youtubeId}` : null;
+            const title = a.attr('data-title') || $el.find('h2 a').text().trim();
+            const thumbnail = $el.find('.wrapper').css('background-image');
+            let thumbnailUrl = null;
+            if (thumbnail) {
+            // Extract URL from background-image: url('...')
+            const match = thumbnail.match(/url\(['"]?(.*?)['"]?\)/);
+            if (match) thumbnailUrl = match[1];
+            }
+            if (youtubeUrl) {
+            openings.push({
+                title,
+                youtubeUrl,
+                youtubeId,
+                thumbnail: thumbnailUrl
+            });
+            }
+        });
+
+        return openings;
+    } catch (error) {
+        console.error(`Error fetching openings for id ${id}:`, error.message);
         return [];
     }
 }
