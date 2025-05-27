@@ -15,7 +15,7 @@ export async function getAnimeDetails(title) {
         $('.search_results .card').each((_, el) => {
             const currentTitle = $(el).find('.title h2').text().trim();
             const href = $(el).find('.poster a').attr('href');
-            const matchScore = calculateSimilarity(title.toLowerCase(), currentTitle.toLowerCase());
+            const matchScore = calculateSimilarity(title, currentTitle);
 
             if (matchScore > highestMatchScore) {
                 highestMatchScore = matchScore;
@@ -27,11 +27,30 @@ export async function getAnimeDetails(title) {
             bestMatch = bestMatch.toString();
         }
 
+        function normalizeString(str) {
+            return str.toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+                .replace(/[^\w\s]/g, '')        // Remove punctuation
+                .replace(/\s+/g, ' ')           // Normalize whitespace
+                .trim();
+        }
+
         function calculateSimilarity(str1, str2) {
-            const words1 = str1.split(/\s+/);
-            const words2 = str2.split(/\s+/);
+            const norm1 = normalizeString(str1);
+            const norm2 = normalizeString(str2);
+            
+            const words1 = str1.toLowerCase().split(/\s+/);
+            const words2 = str2.toLowerCase().split(/\s+/);
             const commonWords = words1.filter(word => words2.includes(word));
-            return commonWords.length / Math.max(words1.length, words2.length);
+            const originalScore = commonWords.length / Math.max(words1.length, words2.length);
+            
+            const normWords1 = norm1.split(/\s+/);
+            const normWords2 = norm2.split(/\s+/);
+            const commonNormWords = normWords1.filter(word => normWords2.includes(word));
+            const normalizedScore = commonNormWords.length / Math.max(normWords1.length, normWords2.length);
+            
+            return Math.max(originalScore, normalizedScore);
         }
 
         const [logos, backdrops, openings] = await Promise.all([

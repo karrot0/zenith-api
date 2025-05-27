@@ -156,6 +156,7 @@ async function extractAnimeInfo(id) {
     const tmdbId = tmdbData.id || null;
     const logos = tmdbData.logos || [];
     const backdrops = tmdbData.backdrops || [];
+    const openings = tmdbData.openings || [];
 
     return {
       adultContent,
@@ -176,6 +177,7 @@ async function extractAnimeInfo(id) {
       episodes,
       logos,
       backdrops,
+      openings
     };
   } catch (e) {
     console.error("Error extracting anime info:", e);
