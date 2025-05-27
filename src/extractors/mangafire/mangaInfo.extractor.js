@@ -59,6 +59,36 @@ export async function extractMangaInfo(mangaId) {
           status = statusText.toLocaleUpperCase().replace(/\s+/g, "_");
         }
 
+        let type = null
+        $(".manga-detail .info .min-info a").each((_, element) => {
+          const text = $(element).text().trim();
+          if (text && $(element).attr("href")?.includes("/type/")) {
+            type = text.toUpperCase();
+          }
+        });
+
+        let published = [];
+        $("#info-rating .meta div").each((_, element) => {
+            const label = $(element).find("span").first().text().trim();
+            if (label === "Published:") {
+                published = $(element).text().replace("Published:", "").trim();
+            }
+        });
+
+        // If publication date format matches "Apr 05, 2021 to ?", parse it appropriately
+        if (published) {
+            // Extract publication date and convert using existing utility
+            const match = published.match(/([A-Za-z]+\s\d{2},\s\d{4})/);
+            if (match) {
+            const publishedDate = match[1];
+            published = {
+                original: published,
+                start: convertToISO8601(publishedDate),
+                end: published.includes("?") ? null : null // Handle end date if present
+            };
+            }
+        }
+
         const genres = [];
         let rating = 1;
     
@@ -141,6 +171,8 @@ export async function extractMangaInfo(mangaId) {
           secondaryTitles: altTitles,
           cover: image,
           synopsis: description,
+          type: type,
+          published,
           rating: rating,
           contentRating: ContentRating.EVERYONE,
           status: status,

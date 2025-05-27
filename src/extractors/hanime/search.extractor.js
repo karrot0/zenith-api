@@ -1,0 +1,1 @@
+// Extracts search page of hanime.tv

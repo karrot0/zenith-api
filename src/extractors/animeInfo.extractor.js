@@ -5,6 +5,7 @@ import { v1_base_url } from "../utils/base_v1.js";
 import extractRecommendedData from "./recommend.extractor.js";
 import extractRelatedData from "./related.extractor.js";
 import { getAnimeById } from "./anilist.extractor.js";
+import { getAnimeDetails } from "./tmdb/main.js";
 
 const baseUrl = v1_base_url;
 
@@ -150,6 +151,12 @@ async function extractAnimeInfo(id) {
         .get();
     }
 
+    // Get TMDB data
+    const tmdbData = await getAnimeDetails(title);
+    const tmdbId = tmdbData.id || null;
+    const logos = tmdbData.logos || [];
+    const backdrops = tmdbData.backdrops || [];
+
     return {
       adultContent,
       data_id,
@@ -164,8 +171,11 @@ async function extractAnimeInfo(id) {
       recommended_data,
       related_data,
       anilist_id: anilistData?.id || null,
+      tmdb_id: tmdbId,
       trailer,
       episodes,
+      logos,
+      backdrops,
     };
   } catch (e) {
     console.error("Error extracting anime info:", e);

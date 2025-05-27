@@ -1,5 +1,6 @@
 import {extractPopularSections} from "../extractors/mangafire/popularSection.extractor.js";
 import {extractMangaInfo} from "../extractors/mangafire/mangaInfo.extractor.js";
+import {extractChapterPages} from "..//extractors/mangafire/chapterDetails.extractor.js";
 import { getCachedData, setCachedData } from "../helper/cache.helper.js";
 
 export const getPopularManga = async (req) => {
@@ -51,3 +52,30 @@ export const getMangaInfo = async (req) => {
     throw new Error("Failed to retrieve manga information");
   }
 };
+
+export const getMangaPages = async (req) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      throw new Error("Manga ID is required");
+    }
+
+    const cacheKey = `mangaPages_${id}`;
+    
+    // Try to get data from cache first
+    const cachedData = await getCachedData(cacheKey);
+    if (cachedData) {
+      return cachedData;
+    }
+    
+    // If not in cache, fetch fresh data
+    const mangaPages = await extractChapterPages(id);
+    
+    // Cache the results for 30 minutes
+    await setCachedData(cacheKey, mangaPages, 30 * 60 * 1000);
+    return mangaPages;
+  } catch (error) {
+    console.error("Error fetching manga pages:", error);
+    throw new Error("Failed to retrieve manga pages");
+  }
+}

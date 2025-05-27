@@ -18,8 +18,8 @@ export const getAnilistInfo = async (req, res) => {
             return res.status(404).json({ error: "Anime not found on Anilist" });
         }
 
-        // Cache forever by using a very long TTL (100 years)
-        await setCachedData(cacheKey, anilistData, 100 * 365 * 24 * 60 * 60 * 1000);
+        // Cache for 12 hours
+        await setCachedData(cacheKey, anilistData, 12 * 60 * 60 * 1000);
         res.json({ success: true, data: anilistData });
     } catch (error) {
         console.error("Anilist Controller Error:", error);

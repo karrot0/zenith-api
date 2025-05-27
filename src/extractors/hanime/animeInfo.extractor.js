@@ -1,0 +1,1 @@
+// Extracts anime information from hanime.tv

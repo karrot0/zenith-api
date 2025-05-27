@@ -21,8 +21,10 @@ import getCharacter from "../controllers/characters.controller.js";
 import * as filterController from "../controllers/filter.controller.js";
 import getTopSearch from "../controllers/topsearch.controller.js";
 import { getAnilistInfo } from "../controllers/anilist.controller.js";
-import { searchCharacter, getMangaInfo } from "../controllers/mal.controller.js";
+import { searchCharacter, getMangaInfo} from "../controllers/mal.controller.js";
 import * as mangafireController from "../controllers/mangafire.controller.js";
+import { getCachedData } from "../helper/cache.helper.js";
+import { getTmdbAnimeDetails } from "../controllers/tmdb.controller.js";
 
 export const createApiRoutes = (app, jsonResponse, jsonError) => {
   const createRoute = (path, controllerMethod) => {
@@ -94,4 +96,24 @@ export const createApiRoutes = (app, jsonResponse, jsonError) => {
   // Mangafire routes
   createRoute("/api/mangafire/popular", mangafireController.getPopularManga);
   createRoute("/api/mangafire/info/:id", mangafireController.getMangaInfo);
+  createRoute("/api/mangafire/chapter/:id", mangafireController.getMangaPages);
+  // TMDB route
+  createRoute("/api/tmdb/:title", getTmdbAnimeDetails);
+
+  // Add image serving endpoint
+  app.get("/api/image/:hash", async (req, res) => {
+    try {
+      const imageData = await getCachedData(`img_${req.params.hash}`);
+      
+      if (!imageData) {
+        return res.status(404).send('Image not found or expired');
+      }
+
+      res.setHeader('Content-Type', imageData.contentType);
+      res.send(Buffer.from(imageData.data));
+    } catch (error) {
+      console.error('Error serving cached image:', error);
+      return res.status(500).send('Error serving image');
+    }
+  });
 };
