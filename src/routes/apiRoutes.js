@@ -26,7 +26,7 @@ import * as mangafireController from "../controllers/mangafire.controller.js";
 import { getCachedData } from "../helper/cache.helper.js";
 import { getTmdbAnimeDetails } from "../controllers/tmdb.controller.js";
 
-export const createApiRoutes = (app, jsonResponse, jsonError) => {
+export const createApiRoutes = (app, jsonResponse, verifyBearerToken) => {
   const createRoute = (path, controllerMethod) => {
     app.get(path, async (req, res) => {
       try {

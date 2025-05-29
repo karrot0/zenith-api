@@ -15,7 +15,20 @@ const PORT = process.env.PORT || 4444;
 const __filename = fileURLToPath(import.meta.url);
 const publicDir = path.join(dirname(__filename), "public");
 
-app.use(cors());
+app.use(cors({
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin ends with zenithme.ne
+    if (origin.endsWith('zenithme.net')) {
+      return callback(null, true);
+    }
+    
+    callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true
+}));
 
 // Add CSP headers
 app.use((req, res, next) => {
@@ -34,12 +47,35 @@ app.use((req, res, next) => {
   next();
 });
 
-// Configure CORS to allow images from any origin
+// Updated CORS policy middleware - removed the universal '*' origin
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
   res.header('Cross-Origin-Resource-Policy', 'cross-origin');
   next();
 });
+
+// Bearer token verification middleware
+const verifyBearerToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      error: 'Authentication required',
+      responseTime: `${Date.now() - req.startTime}ms`
+    });
+  }
+  
+  if (token !== process.env.API_BEARER_TOKEN) {
+    return res.status(403).json({
+      success: false,
+      error: 'Invalid or expired token',
+      responseTime: `${Date.now() - req.startTime}ms`
+    });
+  }
+  
+  next();
+};
 
 // Update jsonResponse to handle errors
 const jsonResponse = (res, data, status = 200) => {
@@ -68,7 +104,8 @@ app.use((err, req, res, next) => {
   jsonResponse(res, errorResponse, errorResponse.statusCode);
 });
 
-createApiRoutes(app, jsonResponse);
+// Apply bearer token verification to API routes
+createApiRoutes(app, jsonResponse, verifyBearerToken);
 
 app.get("*", (req, res) => {
   const filePath = path.join(publicDir, "404.html");
