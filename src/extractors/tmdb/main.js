@@ -1,7 +1,21 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
+import { getCachedData, setCachedData } from "../../helper/cache.helper.js";
+
+// 24 hours cache TTL in milliseconds
+const CACHE_TTL = 24 * 60 * 60 * 1000;
 
 export async function getAnimeDetails(title) {
+    // Generate cache key
+    const cacheKey = `tmdb:details:${title}`;
+    
+    // Check cache first
+    const cachedData = await getCachedData(cacheKey);
+    if (cachedData) {
+        console.log(`Using cached TMDB details for "${title}"`);
+        return cachedData;
+    }
+    
     try {
         const encodedTitle = encodeURIComponent(title);
         const url = `https://www.themoviedb.org/search?language=en-US&query=${encodedTitle}`;
@@ -64,20 +78,40 @@ export async function getAnimeDetails(title) {
             logos: logos,
             backdrops: backdrops,
             openings: openings
-        }
+        };
 
+        // Store in cache for 24 hours
+        await setCachedData(cacheKey, details, CACHE_TTL);
+        
         return details;
     } catch (error) {
         console.error(`Error fetching anime details for title "${title}":`, error.message);
-        return {
+        const errorResult = {
             id: null,
             logos: [],
             backdrops: []
         };
+        
+        // Cache error results too, to avoid hammering failed endpoints
+        await setCachedData(cacheKey, errorResult, CACHE_TTL);
+        return errorResult;
     }
 }
 
 export async function getAnimeLogos(id) {
+    // Return empty array if id is invalid
+    if (!id) return [];
+    
+    // Generate cache key
+    const cacheKey = `tmdb:logos:${id}`;
+    
+    // Check cache first
+    const cachedLogos = await getCachedData(cacheKey);
+    if (cachedLogos) {
+        console.log(`Using cached TMDB logos for id "${id}"`);
+        return cachedLogos;
+    }
+    
     try {
         const response = await axios.get(`https://www.themoviedb.org/tv/${id}/images/logos?language=en-US`);
         const $ = cheerio.load(response.data);
@@ -90,14 +124,32 @@ export async function getAnimeLogos(id) {
             }
         });
 
+        // Store in cache for 24 hours
+        await setCachedData(cacheKey, logos, CACHE_TTL);
+        
         return logos;
     } catch (error) {
         console.error(`Error fetching logos for id ${id}:`, error.message);
+        // Cache empty results too
+        await setCachedData(cacheKey, [], CACHE_TTL);
         return [];
     }
 }
 
 export async function getAnimeBackdrops(id) {
+    // Return empty array if id is invalid
+    if (!id) return [];
+    
+    // Generate cache key
+    const cacheKey = `tmdb:backdrops:${id}`;
+    
+    // Check cache first
+    const cachedBackdrops = await getCachedData(cacheKey);
+    if (cachedBackdrops) {
+        console.log(`Using cached TMDB backdrops for id "${id}"`);
+        return cachedBackdrops;
+    }
+    
     try {
         const response = await axios.get(`https://www.themoviedb.org/tv/${id}/images/backdrops?language=en-US`);
         const $ = cheerio.load(response.data);
@@ -111,9 +163,14 @@ export async function getAnimeBackdrops(id) {
             }
         });
         
+        // Store in cache for 24 hours
+        await setCachedData(cacheKey, backdrops, CACHE_TTL);
+        
         return backdrops;
     } catch (error) {
         console.error(`Error fetching backdrops for id ${id}:`, error.message);
+        // Cache empty results too
+        await setCachedData(cacheKey, [], CACHE_TTL);
         return [];
     }
 }
