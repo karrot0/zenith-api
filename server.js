@@ -15,16 +15,28 @@ const PORT = process.env.PORT || 4444;
 const __filename = fileURLToPath(import.meta.url);
 const publicDir = path.join(dirname(__filename), "public");
 
+// CORS configuration - this only controls which origins can connect
+// It does NOT bypass authentication requirements
 app.use(cors({
   origin: function(origin, callback) {
+    // Even with allowed origins, bearer token is still required for API endpoints
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    
-    // Check if origin ends with zenithme.ne
+
+    if (
+      origin.startsWith('http://localhost') ||
+      origin.startsWith('http://127.0.0.1') ||
+      origin.startsWith('https://localhost') ||
+      origin.startsWith('https://127.0.0.1')
+    ) {
+      return callback(null, true);
+    }
+
+    // Check if origin ends with zenithme.net
     if (origin.endsWith('zenithme.net')) {
       return callback(null, true);
     }
-    
+
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true
@@ -47,6 +59,24 @@ app.use((req, res, next) => {
   next();
 });
 
+// Log request IP address and path
+app.use((req, res, next) => {
+  // Get IP address - check for proxy forwarded IP first
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  
+  // Get request method and path
+  const method = req.method;
+  const path = req.originalUrl || req.url;
+  
+  // Get user agent
+  const userAgent = req.headers['user-agent'] || 'Unknown';
+  
+  // Log the request information
+  console.log(`[${new Date().toISOString()}] ${method} ${path} - IP: ${ip} - User-Agent: ${userAgent}`);
+  
+  next();
+});
+
 // Updated CORS policy middleware - removed the universal '*' origin
 app.use((req, res, next) => {
   res.header('Cross-Origin-Resource-Policy', 'cross-origin');
@@ -59,6 +89,7 @@ const verifyBearerToken = (req, res, next) => {
   const token = authHeader && authHeader.split(' ')[1];
   
   if (!token) {
+    console.log(`Authentication failed: No token provided - IP: ${req.headers['x-forwarded-for'] || req.socket.remoteAddress} - Path: ${req.path}`);
     return res.status(401).json({
       success: false,
       error: 'Authentication required',
@@ -67,6 +98,7 @@ const verifyBearerToken = (req, res, next) => {
   }
   
   if (token !== process.env.API_BEARER_TOKEN) {
+    console.log(`Authentication failed: Invalid token - IP: ${req.headers['x-forwarded-for'] || req.socket.remoteAddress} - Path: ${req.path}`);
     return res.status(403).json({
       success: false,
       error: 'Invalid or expired token',
@@ -104,8 +136,8 @@ app.use((err, req, res, next) => {
   jsonResponse(res, errorResponse, errorResponse.statusCode);
 });
 
-// Apply bearer token verification to API routes
-createApiRoutes(app, jsonResponse, verifyBearerToken);
+app.use(verifyBearerToken);
+createApiRoutes(app, jsonResponse);
 
 app.get("*", (req, res) => {
   const filePath = path.join(publicDir, "404.html");
